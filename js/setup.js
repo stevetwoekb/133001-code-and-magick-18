@@ -60,8 +60,6 @@ function getRandomeElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-getRandomeElement(WIZARD_COAT_COLORS);
-
 openPopUpButton.addEventListener('click', userClickHandler);
 openPopUpButton.addEventListener('keydown', userKeydownHandler);
 closePopUpButton.addEventListener('click', crossClickHandler);
