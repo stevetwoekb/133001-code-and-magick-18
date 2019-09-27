@@ -148,5 +148,4 @@ function setSetupWizard() {
   wizardEyes.addEventListener('click', onWizardEyesClickHandler);
   fireball.addEventListener('click', onFireballClickHandler);
 }
-
 setSetupWizard();
