@@ -63,8 +63,6 @@ function renderWizards() {
   similarListElement.appendChild(fragment);
 }
 
-renderDialog();
-
 function setSetupModal() {
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
@@ -73,48 +71,47 @@ function setSetupModal() {
 
   function popUpClose() {
     setup.classList.add('hidden');
-    document.removeEventListener('keydown', onDocumentKeydownHandler);
+    document.removeEventListener('keydown', onDocumentKeydown);
   }
 
   function popUpOpen() {
     setup.classList.remove('hidden');
-    document.addEventListener('keydown', onDocumentKeydownHandler);
+    document.addEventListener('keydown', onDocumentKeydown);
   }
 
-  function onSetupOpenClickHandler() {
+  function onSetupOpenClick() {
     popUpOpen();
   }
 
-  function onSetupOpenKeydownHandler(evt) {
+  function onSetupOpenKeydown(evt) {
     if (evt.keyCode === KEY_CODE_ENTER) {
       popUpOpen();
     }
   }
 
-  function onSetupCloseClickHandler() {
+  function onSetupCloseClick() {
     popUpClose();
   }
 
-  function onSetupCloseKeydownHandler(evt) {
+  function onSetupCloseKeydown(evt) {
     if (evt.keyCode === KEY_CODE_ENTER) {
       popUpClose();
     }
   }
 
 
-  function onDocumentKeydownHandler(evt) {
+  function onDocumentKeydown(evt) {
     if (evt.keyCode === KEY_CODE_ESC && document.activeElement !== setupUserName) {
       popUpClose();
     }
   }
 
-  setupOpen.addEventListener('click', onSetupOpenClickHandler);
-  setupOpen.addEventListener('keydown', onSetupOpenKeydownHandler);
-  setupClose.addEventListener('click', onSetupCloseClickHandler);
-  setupClose.addEventListener('keydown', onSetupCloseKeydownHandler);
-  document.addEventListener('keydown', onDocumentKeydownHandler);
+  setupOpen.addEventListener('click', onSetupOpenClick);
+  setupOpen.addEventListener('keydown', onSetupOpenKeydown);
+  setupClose.addEventListener('click', onSetupCloseClick);
+  setupClose.addEventListener('keydown', onSetupCloseKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 }
-setSetupModal();
 
 function setSetupWizard() {
   var wizard = document.querySelector('.setup-wizard');
@@ -132,20 +129,23 @@ function setSetupWizard() {
     }
   }
 
-  function onWizardCoatClickHandler() {
+  function onWizardCoatClick() {
     setColor(WIZARD_COAT_COLOR, wizardCoat, 'coat-color');
   }
 
-  function onFireballClickHandler() {
+  function onFireballClick() {
     setColor(WIZARD_FIREBALL_COLORS, fireball, 'fireball-color');
   }
 
-  function onWizardEyesClickHandler() {
+  function onWizardEyesClick() {
     setColor(WIZARD_EYES_COLOR, wizardEyes, 'eyes-color');
   }
 
-  wizardCoat.addEventListener('click', onWizardCoatClickHandler);
-  wizardEyes.addEventListener('click', onWizardEyesClickHandler);
-  fireball.addEventListener('click', onFireballClickHandler);
+  wizardCoat.addEventListener('click', onWizardCoatClick);
+  wizardEyes.addEventListener('click', onWizardEyesClick);
+  fireball.addEventListener('click', onFireballClick);
 }
+
+renderDialog();
+setSetupModal();
 setSetupWizard();
