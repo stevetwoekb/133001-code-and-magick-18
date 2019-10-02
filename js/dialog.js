@@ -4,6 +4,8 @@ window.dialog = (function () {
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
   var upload = setup.querySelector('.upload');
+  var isEnterKeydown = window.util.isEnterKeydown;
+  var isEscKeyDown = window.util.isEscKeyDown;
   var startCoords = {
     x: 0,
     y: 0
@@ -15,7 +17,7 @@ window.dialog = (function () {
   }
 
   function onSetupOpenKeydown(evt) {
-    window.util.isEnterKeydown(evt, popUpOpen);
+    isEnterKeydown(evt, popUpOpen);
   }
 
   function onSetupCloseClick() {
@@ -23,15 +25,16 @@ window.dialog = (function () {
   }
 
   function onSetupCloseKeydown(evt) {
-    window.util.isEnterKeydown(evt, popUpClose);
+    isEnterKeydown(evt, popUpClose);
   }
 
   function onDocumentKeydown(evt) {
-    window.util.isEscKeyDown(evt, popUpClose);
+    isEscKeyDown(evt, popUpClose);
   }
 
   function popUpClose() {
     setup.classList.add('hidden');
+    setup.removeAttribute('style');
     document.removeEventListener('keydown', onDocumentKeydown);
   }
 
@@ -43,18 +46,20 @@ window.dialog = (function () {
   function renderDialog() {
     var userDialog = document.querySelector('.setup');
     userDialog.classList.remove('hidden');
-    window.wizards.renderWizards();
     userDialog.querySelector('.setup-similar').classList.remove('hidden');
   }
 
   function onDocumentMouseMove(evt) {
     evt.preventDefault();
-    dragged = true;
 
     var shift = {
       x: startCoords.x - evt.clientX,
       y: startCoords.y - evt.clientY
     };
+
+    if (shift.x && shift.y) {
+      dragged = true;
+    }
 
     startCoords = {
       x: evt.clientX,
@@ -69,6 +74,11 @@ window.dialog = (function () {
     evt.preventDefault();
     document.removeEventListener('mousemove', onDocumentMouseMove);
     document.removeEventListener('mouseup', onUploadMouseUp);
+
+    if (dragged) {
+      upload.addEventListener('click', onClickPreventDefault);
+    }
+    dragged = false;
   }
 
   function onClickPreventDefault(evt) {
