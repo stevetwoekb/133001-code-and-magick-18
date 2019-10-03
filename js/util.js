@@ -1,8 +1,8 @@
 'use strict';
 window.util = (function () {
-  var setupUserName = document.querySelector('.setup-user-name');
   var KEY_CODE_ESC = 27;
   var KEY_CODE_ENTER = 13;
+  var setupUserName = document.querySelector('.setup-user-name');
 
   function getRandomValue(data) {
     return data[Math.floor(Math.random() * data.length)];

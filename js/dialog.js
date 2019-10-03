@@ -1,11 +1,11 @@
 'use strict';
 window.dialog = (function () {
+  var isEnterKeydown = window.util.isEnterKeydown;
+  var isEscKeyDown = window.util.isEscKeyDown;
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
   var upload = setup.querySelector('.upload');
-  var isEnterKeydown = window.util.isEnterKeydown;
-  var isEscKeyDown = window.util.isEscKeyDown;
   var startCoords = {
     x: 0,
     y: 0
@@ -93,7 +93,6 @@ window.dialog = (function () {
     if (dragged) {
       onClickPreventDefault();
     }
-    upload.addEventListener('click', onClickPreventDefault);
     document.addEventListener('mousemove', onDocumentMouseMove);
     document.addEventListener('mouseup', onUploadMouseUp);
   }

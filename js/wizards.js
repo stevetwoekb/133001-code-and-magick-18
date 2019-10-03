@@ -53,7 +53,7 @@ window.wizards = (function () {
     return WIZARD_EYES_COLOR;
   }
 
-  function rendrerWizards() {
+  function renderWizards() {
     var similarListElement = document.querySelector('.setup-similar-list');
     var fragment = document.createDocumentFragment();
     var wizards = generateWizards();
@@ -67,6 +67,6 @@ window.wizards = (function () {
     getCoatColors: getCoatColors,
     getFireballColors: getFireballColors,
     getEyeColors: getEyeColors,
-    render: rendrerWizards
+    render: renderWizards
   };
 })();
