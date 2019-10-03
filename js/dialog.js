@@ -89,10 +89,6 @@ window.dialog = (function () {
   function onUploadMousedown(evt) {
     startCoords.x = evt.clientX;
     startCoords.y = evt.clientY;
-
-    if (dragged) {
-      onClickPreventDefault();
-    }
     document.addEventListener('mousemove', onDocumentMouseMove);
     document.addEventListener('mouseup', onUploadMouseUp);
   }
