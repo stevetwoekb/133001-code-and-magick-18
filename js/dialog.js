@@ -2,9 +2,13 @@
 window.dialog = (function () {
   var isEnterKeydown = window.util.isEnterKeydown;
   var isEscKeyDown = window.util.isEscKeyDown;
+  var render = window.wizards.render;
+  var load = window.backend.load;
+  var save = window.backend.save;
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
+  var form = setup.querySelector('.setup-wizard-form');
   var upload = setup.querySelector('.upload');
   var startCoords = {
     x: 0,
@@ -43,10 +47,30 @@ window.dialog = (function () {
     document.addEventListener('keydown', onDocumentKeydown);
   }
 
+  function showMessage(message) {
+    var errorElement = document.createElement('div');
+    errorElement.textContent = 'Ошибка ' + message + ' пожалуйста, обратитесь к администратору';
+    errorElement.classList.add('error-message');
+    document.body.insertBefore(errorElement, setup);
+
+    function hideMessage() {
+      errorElement.remove();
+    }
+
+    setTimeout(hideMessage, 4000);
+  }
+
   function renderDialog() {
     var userDialog = document.querySelector('.setup');
     userDialog.classList.remove('hidden');
     userDialog.querySelector('.setup-similar').classList.remove('hidden');
+    function onLoad(wizards) {
+      render(wizards);
+    }
+    function onError(error) {
+      showMessage(error);
+    }
+    load(onLoad, onError);
   }
 
   function onDocumentMouseMove(evt) {
@@ -86,6 +110,19 @@ window.dialog = (function () {
     upload.removeEventListener('click', onClickPreventDefault);
   }
 
+  function onSubmitForm(evt) {
+    var data = new FormData(form);
+    save(data, onSuccess, onError);
+    function onSuccess() {
+      setup.classList.add('hidden');
+    }
+
+    function onError(error) {
+      showMessage(error);
+    }
+    evt.preventDefault();
+  }
+
   function onUploadMousedown(evt) {
     startCoords.x = evt.clientX;
     startCoords.y = evt.clientY;
@@ -93,6 +130,7 @@ window.dialog = (function () {
     document.addEventListener('mouseup', onUploadMouseUp);
   }
 
+  form.addEventListener('submit', onSubmitForm);
   upload.addEventListener('mousedown', onUploadMousedown);
   setupOpen.addEventListener('click', onSetupOpenClick);
   setupOpen.addEventListener('keydown', onSetupOpenKeydown);
