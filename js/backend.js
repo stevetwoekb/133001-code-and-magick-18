@@ -1,7 +1,7 @@
 'use strict';
 window.backend = (function () {
   var URL = 'https://js.dump.academy/code-and-magick/data';
-  var URL_SAND = 'https://js.dump.academy/code-and-magick';
+  var URL_SEND = 'https://js.dump.academy/code-and-magick';
 
   function load(onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -27,7 +27,7 @@ window.backend = (function () {
 
   function save(data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', URL_SAND);
+    xhr.open('POST', URL_SEND);
     onLoad(xhr.response);
     xhr.send(data);
     function onLoadFunc() {

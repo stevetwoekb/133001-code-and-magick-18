@@ -5,11 +5,13 @@ window.dialog = (function () {
   var render = window.wizards.render;
   var load = window.backend.load;
   var save = window.backend.save;
+  var setListeners = window.setup.setListeners;
   var setup = document.querySelector('.setup');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
   var form = setup.querySelector('.setup-wizard-form');
   var upload = setup.querySelector('.upload');
+  var wizardsArray;
   var startCoords = {
     x: 0,
     y: 0
@@ -65,6 +67,8 @@ window.dialog = (function () {
     userDialog.classList.remove('hidden');
     userDialog.querySelector('.setup-similar').classList.remove('hidden');
     function onLoad(wizards) {
+      wizardsArray = wizards;
+      setListeners(wizards);
       render(wizards);
     }
     function onError(error) {
@@ -138,4 +142,8 @@ window.dialog = (function () {
   setupClose.addEventListener('keydown', onSetupCloseKeydown);
   document.addEventListener('keydown', onDocumentKeydown);
   renderDialog();
+
+  return {
+    wizardsArray: wizardsArray
+  };
 })();
